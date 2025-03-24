@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             echo "Login successful!";
             // Redirect to dashboard or home page
-            header("Location: dashboard.php");
+            header("Location:../../trip/");
             exit();
         } else {
             echo "Invalid password.";
