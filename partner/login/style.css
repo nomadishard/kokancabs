@@ -1,0 +1,50 @@
+.nav-item{
+    font-size: 3vh;
+}
+
+.nav-link {
+    position: relative;
+    text-decoration: none;
+}
+
+.nav-link::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}
+
+.navbar-brand{
+    font-size: 5vh;
+}
+.sec1{
+    background-image: url('../../assets/bg3.png');
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-size: cover; /* Ensures the image covers the entire section */
+    height: 100vh; /* Sets the height of the section to the full viewport height */
+
+
+}
+
+button {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: rgb(6, 139, 6);
+}

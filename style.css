@@ -1,0 +1,206 @@
+.nav-item{
+    font-size: 3vh;
+}
+
+.nav-link {
+    position: relative;
+    text-decoration: none;
+}
+
+.nav-link::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}
+.navbar-brand{
+    font-size: 5vh;
+}
+.select-container {
+    display: flex; /* Use flexbox to align items */
+    align-items: center; /* Vertically align items in the center */
+    border-bottom: 1px solid; /* Add a border */
+    border-radius: 5px;
+    overflow: hidden; /* Hide any overflowing content */
+     /* Adjust width as needed */
+     width: 100%;
+    margin-bottom:5px;
+}
+
+.car-icon {
+    margin-right: 10px; /* Add spacing between the icon and the select */
+    margin-left: 5px;
+    color: #555; /* Adjust icon color */
+}
+input[type="datetime-local"] {
+    width: 100%; /* Adjust width as needed */
+    padding: 8px; /* Add padding for better spacing */
+    font-size: 14px; /* Adjust font size */
+    border: 1px solid #ccc; /* Default border */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+input[type="datetime-local"]:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: #aaa; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow on focus */
+}
+
+
+.cab-type-select {
+    padding: 8px;
+    border: none; /* Remove default border */
+    outline: none; /* Remove focus outline */
+    background-color: transparent; /* Make background transparent */
+    width: 100%; /* Take up remaining width */
+    font-size: 14px;
+    color: #333;
+}
+
+
+
+
+.booking-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+}
+
+.trip-type {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: rgb(6, 139, 6);
+}
+
+.sec1{
+        background-image: url('assets/bg1.png');
+        background-repeat: no-repeat; /* Prevents the image from repeating */
+        background-size: cover; /* Ensures the image covers the entire section */
+         /* Sets the height of the section to the full viewport height */
+        padding-bottom: 30px;    
+    
+}
+
+.sec3 {
+    background-image: url('assets/bg3.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: 3vh;
+    overflow: hidden; /* Prevents text from overflowing */
+}
+
+.input-container {
+    position: relative; /* Important: Creates a positioning context for absolute positioning */
+    width: 200px; /* Adjust as needed */
+}
+
+.input-container svg {
+    position: absolute;
+    top: 50%;
+    left: 5px; /* Adjust for spacing */
+    transform: translateY(-50%); /* Vertically center the icon */
+    pointer-events: none; /* Makes the icon non-interactive */
+    opacity: 0.5; /* Adjust icon color (optional) */
+}
+.input-container input {
+    padding-left: 30px; /* Adjust to make space for the icon */
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+    border: none;
+    border-bottom: solid;
+}
+
+.sec4 {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+
+  /* Custom styling for the image */
+  @media (min-width: 768px) { /* For tablets and larger screens */
+    .custom-image {
+      max-height: 40vh; /* Adjust height for larger screens */
+    }
+  }
+  
+  @media (min-width: 992px) { /* For desktops */
+    .custom-image {
+      max-height: 30vh; /* Further reduce height for desktops */
+    }
+  }
+  
+  .sec4 {
+    background-color: #f8f9fa; /* Light background color */
+    padding: 40px 20px; /* Padding around the section */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.custom-image {
+    max-width: 100%; /* Ensure the image is responsive */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners for the image */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding for the button */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners for the button */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+@media (max-width: 576px) {
+    .col-sm-6 {
+        margin-bottom: 20px; /* Space below the image on small screens */
+    }
+}
+  

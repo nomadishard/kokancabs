@@ -1,0 +1,108 @@
+.nav-item{
+    font-size: 3vh;
+}
+
+.nav-link {
+    position: relative;
+    text-decoration: none;
+}
+
+.nav-link::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}
+
+.navbar-brand{
+    font-size: 5vh;
+}
+
+.sec1{
+    background-image: url('../../assets/bg1.png');
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-size: cover; /* Ensures the image covers the entire section */
+    height: 100vh; /* Sets the height of the section to the full viewport height */
+
+
+}
+.booking-form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    
+      
+}
+
+.input-container {
+    position: relative; /* Important: Creates a positioning context for absolute positioning */
+    width: 200px; /* Adjust as needed */
+}
+.password-container {
+    position: relative;
+}
+
+.password-container input[type="password"] {
+    padding-right: 40px;
+}
+
+.password-container input[type="text"] {
+    padding-right: 40px;
+}
+
+.show-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 12px;
+    color: #333;
+}
+
+.input-container svg {
+    position: absolute;
+    top: 50%;
+    left: 5px; /* Adjust for spacing */
+    transform: translateY(-50%); /* Vertically center the icon */
+    pointer-events: none; /* Makes the icon non-interactive */
+    opacity: 0.5; /* Adjust icon color (optional) */
+}
+.input-container input {
+    padding-left: 30px; /* Adjust to make space for the icon */
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+    border: none;
+    border-bottom: solid;
+}
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: rgb(6, 139, 6);
+}

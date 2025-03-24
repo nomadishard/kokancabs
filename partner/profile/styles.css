@@ -1,0 +1,51 @@
+/* styles.css */
+.nav-item{
+    font-size: 3vh;
+}
+
+.nav-link {
+    position: relative;
+    text-decoration: none;
+}
+
+.nav-link::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::before {
+    width: 100%;
+}
+.navbar-brand{
+    font-size: 5vh;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+img {
+    max-width: 100px; /* Set a max width for images */
+}
