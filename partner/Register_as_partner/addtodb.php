@@ -54,7 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         VALUES ('$driver_id', '$rc_photo', '$fitness_photo', '$permit_photo', '$insurance_photo', '$tax_photo', '$authorization_photo')";
 
         if ($conn->query($sql_vehicle) === TRUE) {
-            echo "Registration successful!";
+            echo "<script>alert('Registration successful!');
+
+            // Redirect to another page (e.g., a welcome page)
+            window.location.href = '../login/';</script>";
         } else {
             echo "Error: " . $sql_vehicle . "<br>" . $conn->error;
         }
