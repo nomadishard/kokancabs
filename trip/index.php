@@ -73,9 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
                                 <?php echo strtoupper($_SESSION['name']) ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a href="../edit/" class="dropdown-item">Edit Profile</a></li>
+                                <!-- <li><a href="../edit/" class="dropdown-item">Edit Profile</a></li> -->
                                 <li><a href="../partner/mytrips/" class="dropdown-item">My Trips</a></li>
-                                <li><a href="../deletedata.php" class="dropdown-item">Delete Profile</a></li>
                                 <li><a href="../logout.php" class="dropdown-item">LOGOUT</a></li>
                             </ul>
                         </li>
