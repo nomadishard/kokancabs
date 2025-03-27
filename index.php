@@ -38,7 +38,7 @@
             </li>
           </ul> -->
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a href="partner/login/" class="nav-link active">LOGIN</a></li>
+            <li class="nav-item"><a href="user_login/" class="nav-link active">LOGIN</a></li>
           </ul>
         </div>
       </div>
@@ -130,7 +130,7 @@
                         </svg>
                         <select required class="cab-type-select" name="cartype">
                           <option value="" disabled selected>Cab Type</option>
-                          <option value="sedan">Hatchback (Capacity - 4)</option>
+                          <option value="hatchback">Hatchback (Capacity - 4)</option>
                           <option value="suv">SUV (Capacity - 6)</option>
                         </select>
                       </div>
@@ -206,7 +206,7 @@
                         </svg>
                         <select required class="cab-type-select" name="cartype">
                           <option value="" disabled selected>Cab Type</option>
-                          <option value="sedan">Hatchback (Capacity - 4)</option>
+                          <option value="hatchback">Hatchback (Capacity - 4)</option>
                           <option value="suv">SUV (Capacity - 6)</option>
                         </select>
                       </div>

@@ -1,0 +1,29 @@
+body {
+    background-color: #f8f9fa; /* Light background color */
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #343a40; /* Darker text color */
+}
+
+.table {
+    margin-top: 20px;
+    border-radius: 0.5rem; /* Rounded corners for the table */
+    overflow: hidden; /* To ensure rounded corners are visible */
+}
+
+.table th {
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white; /* White text for headers */
+}
+
+.table td {
+    vertical-align: middle; /* Center align text vertically */
+}
+
+footer {
+    background-color: #343a40; /* Dark footer background */
+    color: white; /* White text in footer */
+    padding: 10px 0; /* Padding for footer */
+}
