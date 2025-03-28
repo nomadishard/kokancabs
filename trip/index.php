@@ -57,14 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="../">Home</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Trip Requests</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Contact Us</a>
+                            <a class="nav-link active" aria-current="page" href="../partner/mytrips/">My Trips</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">

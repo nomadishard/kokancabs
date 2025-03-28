@@ -126,6 +126,10 @@
                         <!-- Car Details Section -->
                         <div id="carDetails" style="display: none;">
                             <div class="container">
+                                <label for="vcno">Vehicle Number:</label>
+                                <input type="text" id="vcno" name="vcno" required>
+                            </div>
+                            <div class="container">
                                 <label for="RCPhoto">Upload Vehicle RC Photo:</label>
                                 <input type="file" id="RCPhoto" name="RCPhoto" accept="image/*" required>
                                 <div id="preview-container">

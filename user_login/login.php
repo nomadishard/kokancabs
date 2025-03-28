@@ -30,9 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location:../mybookings/");
             exit();
         } else {
-            echo "Invalid password.";
+            echo '<script>
+    alert("Invalid password.");
+    window.history.back();
+</script>';
         }
     } else {
-        echo "No user found with that phone number.";
+        echo '<script>
+    alert("No user with that Phone Number.");
+    window.history.back();
+</script>';
     }
 }
