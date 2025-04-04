@@ -61,8 +61,8 @@ $phone = $_SESSION['phone'];
                     <th>Destination</th>
                     <th>Timing</th>
                     <th>Status</th>
-                    <th>Counter Offers</th>
-                    
+                    <th>View Offers</th>
+                    <th>Driver Details</th>
                 </tr>
             </thead>
             <tbody>";
@@ -78,41 +78,18 @@ $phone = $_SESSION['phone'];
                     <td>$statusDisplay</td>
                     <td>";
 
-                // Only fetch counter offers if the status is not "In Progress"
+                // Provide a link to view offers if the status is not "In Progress"
                 if ($row['status'] != 1) {
-                    // Fetch counter offers for this booking
                     $trip_id = $row['req_id'];
-                    $offer_sql = "SELECT driver_id, counter_price FROM counter_offers WHERE trip_id = ?";
-                    $offer_stmt = $conn->prepare($offer_sql);
-                    $offer_stmt->bind_param("i", $trip_id);
-                    $offer_stmt->execute();
-                    $offers_result = $offer_stmt->get_result();
-
-                    if ($offers_result->num_rows > 0) {
-                        while ($offer = $offers_result->fetch_assoc()) {
-                            // Fetch driver details
-                            $driver_id = $offer['driver_id'];
-                            $driver_sql = "SELECT name FROM driverdetails WHERE driver_id = ?";
-                            $driver_stmt = $conn->prepare($driver_sql);
-                            $driver_stmt->bind_param("i", $driver_id);
-                            $driver_stmt->execute();
-                            $driver_result = $driver_stmt->get_result();
-
-                            if ($driver_result->num_rows > 0) {
-                                $driver_info = $driver_result->fetch_assoc();
-                                echo "Driver: " . htmlspecialchars($driver_info['name']) . " - Offer Price: " . htmlspecialchars($offer['counter_price']) . " 
-                                <form method='POST' action='accept_offer.php' style='display:inline;'>
-                                    <input type='hidden' name='trip_id' value='$trip_id'>
-                                    <input type='hidden' name='driver_id' value='$driver_id'>
-                                    <button type='submit' class='btn btn-success btn-sm'>Accept</button>
-                                </form><br>";
-                            }
-                        }
-                    } else {
-                        echo "No counter offers available.";
-                    }
+                    echo "<a href='view_offers.php?trip_id=$trip_id' class='btn btn-primary btn-sm'>View Offers</a>";
                 } else {
-                    // If the status is "In Progress", fetch and display driver details
+                    echo "N/A"; // No offers to view if the trip is in progress
+                }
+
+                echo "</td><td>";
+
+                // If the status is "In Progress", fetch and display driver details
+                if ($row['status'] == 1) {
                     $driver_id = $row['driver_id'];
                     if ($driver_id != 0) {
                         $driver_sql = "SELECT name, phone FROM driverdetails WHERE driver_id = ?";
@@ -130,6 +107,8 @@ $phone = $_SESSION['phone'];
                     } else {
                         echo "No driver allotted.";
                     }
+                } else {
+                    echo "N/A"; // No driver details if the trip is not in progress
                 }
 
                 echo "</td></tr>";
