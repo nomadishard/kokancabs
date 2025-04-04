@@ -12,15 +12,31 @@ include '../db.php';
 $sql = "SELECT * FROM cabrequests WHERE status = 0"; // Assuming status = 0 means available trips
 $result = $conn->query($sql);
 
-// Handle trip acceptance
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
+// Handle counter offer submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_offer'])) {
     $trip_id = $_POST['trip_id'];
     $driver_id = $_SESSION['driver_id'];
+    $counter_price = $_POST['counter_price']; // Get the counter price from the form
+
+    // Insert the counter offer into the counter_offers table
+    $insert_sql = "INSERT INTO counter_offers (trip_id, driver_id, counter_price) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($insert_sql);
+    $stmt->bind_param("iid", $trip_id, $driver_id, $counter_price);
+    $stmt->execute();
+
+    // Redirect to the same page to refresh the trip list
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+// Handle trip acceptance at current offer price
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
+    $trip_id = $_POST['trip_id'];
 
     // Update the trip status to accepted (assuming status = 1 means accepted)
-    $update_sql = "UPDATE cabrequests SET status = 1, driver_id = ? WHERE req_id = ? AND status = 0 LIMIT 1";
+    $update_sql = "UPDATE cabrequests SET status = 1 WHERE req_id = ? LIMIT 1";
     $stmt = $conn->prepare($update_sql);
-    $stmt->bind_param("ii", $driver_id, $trip_id);
+    $stmt->bind_param("i", $trip_id);
     $stmt->execute();
 
     // Redirect to the same page to refresh the trip list
@@ -57,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto me-auto">
-
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Trip Requests</a>
                         </li>
@@ -71,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
                                 <?php echo strtoupper($_SESSION['name']) ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <!-- <li><a href="../edit/" class="dropdown-item">Edit Profile</a></li> -->
                                 <li><a href="../partner/mytrips/" class="dropdown-item">My Trips</a></li>
                                 <li><a href="../logout.php" class="dropdown-item">LOGOUT</a></li>
                             </ul>
@@ -100,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
                                 <th>Passengers</th>
                                 <th>Car Type</th>
                                 <th>Trip Type</th>
+                                <th>Offer Price</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -117,11 +132,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
                                     <td><?php echo !empty($trip['passengers']) ? htmlspecialchars($trip['passengers']) : 'N/A'; ?></td>
                                     <td><?php echo !empty($trip['cartype']) ? htmlspecialchars($trip['cartype']) : 'N/A'; ?></td>
                                     <td><?php echo !empty($trip['triptype']) ? htmlspecialchars($trip['triptype']) : 'N/A'; ?></td>
+                                    <td><?php echo !empty($trip['offer_price']) ? htmlspecialchars($trip['offer_price']) : 'N/A'; ?></td>
                                     <td><?php echo $trip['status'] == 1 ? 'Accepted' : 'Available'; ?></td>
                                     <td>
                                         <form method="POST" action="">
                                             <input type="hidden" name="trip_id" value="<?php echo $trip['req_id']; ?>">
-                                            <button type="submit" name="accept_trip" class="btn btn-primary" <?php echo $trip['status'] == 1 ? 'disabled' : ''; ?>>Accept</button>
+                                            <input type="number" name="counter_price" placeholder="Enter Counter Price" required min="0" step="0.01">
+                                            <button type="submit" name="submit_offer" class="btn btn-primary">Submit Offer</button>
+                                            <button type="submit" name="accept_trip" class="btn btn-success">Accept at Offer Price</button>
                                         </form>
                                     </td>
                                 </tr>

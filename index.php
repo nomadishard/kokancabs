@@ -139,6 +139,13 @@
                       <input type="datetime-local" id="dropoff-date-input" required name="datetime">
                     </div>
                   </div>
+                  <div class="row justify-content-center align-items-center g-2">
+                    <div class="col">
+                      <div class="input-container">
+                        <input type="number" placeholder="Offer Price" name="offer_price" min="0">
+                      </div>
+                    </div>
+                  </div>
                   <button type="submit">Request Cab</button>
                   </form>
                 </div>
@@ -223,6 +230,14 @@
                       <input type="datetime-local" id="dropoff-date-input" required name="datetime2">
                     </div>
 
+
+                  </div>
+                  <div class="row justify-content-center align-items-center g-2">
+                    <div class="col">
+                      <div class="input-container">
+                        <input type="number" placeholder="Offer Price" name="offer_price" min="0">
+                      </div>
+                    </div>
                   </div>
                   <button type="submit">Request Cab</button>
                   </form>
@@ -300,7 +315,13 @@
                       </div>
                     </div>
                   </div>
-
+                  <div class="row justify-content-center align-items-center g-2">
+                    <div class="col">
+                      <div class="input-container">
+                        <input type="number" placeholder="Offer Price" name="offer_price" min="0">
+                      </div>
+                    </div>
+                  </div>
                   <button type="submit">Request Cab</button>
                   </form>
                 </div>
