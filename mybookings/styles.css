@@ -7,19 +7,8 @@ h1 {
     color: #343a40; /* Darker text color */
 }
 
-.table {
-    margin-top: 20px;
-    border-radius: 0.5rem; /* Rounded corners for the table */
-    overflow: hidden; /* To ensure rounded corners are visible */
-}
-
-.table th {
-    background-color: #007bff; /* Bootstrap primary color */
-    color: white; /* White text for headers */
-}
-
-.table td {
-    vertical-align: middle; /* Center align text vertically */
+.card {
+    border-radius: 0.5rem; /* Rounded corners for the card */
 }
 
 footer {

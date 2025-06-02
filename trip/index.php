@@ -15,14 +15,20 @@ $result = $conn->query($sql);
 // Handle counter offer submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_offer'])) {
     $trip_id = $_POST['trip_id'];
-    $driver_id = $_SESSION['driver_id'];
+
     $counter_price = $_POST['counter_price']; // Get the counter price from the form
 
     // Insert the counter offer into the counter_offers table
     $insert_sql = "INSERT INTO counter_offers (trip_id, driver_id, counter_price) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($insert_sql);
     $stmt->bind_param("iid", $trip_id, $driver_id, $counter_price);
-    $stmt->execute();
+    if ($stmt->execute()) {
+        $_SESSION['alertMessage'] = 'Counter offer submitted successfully!';
+        $_SESSION['alertType'] = 'success';
+    } else {
+        $_SESSION['alertMessage'] = 'Failed to submit counter offer. Please try again.';
+        $_SESSION['alertType'] = 'danger';
+    }
 
     // Redirect to the same page to refresh the trip list
     header("Location: " . $_SERVER['PHP_SELF']);
@@ -32,12 +38,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_offer'])) {
 // Handle trip acceptance at current offer price
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
     $trip_id = $_POST['trip_id'];
+    $driver_id = $_SESSION['driver_id'];
 
     // Update the trip status to accepted (assuming status = 1 means accepted)
-    $update_sql = "UPDATE cabrequests SET status = 1 WHERE req_id = ? LIMIT 1";
+    $update_sql = "UPDATE cabrequests SET `status` = 1, `driver_id` = ? WHERE req_id = ? LIMIT 1";
     $stmt = $conn->prepare($update_sql);
-    $stmt->bind_param("i", $trip_id);
-    $stmt->execute();
+    $stmt->bind_param("ii", $driver_id, $trip_id);
+
+    if ($stmt->execute()) {
+        $_SESSION['alertMessage'] = 'Trip accepted successfully!';
+        $_SESSION['alertType'] = 'success';
+    } else {
+        $_SESSION['alertMessage'] = 'Failed to accept trip. Please try again.';
+        $_SESSION['alertType'] = 'danger';
+    }
 
     // Redirect to the same page to refresh the trip list
     header("Location: " . $_SERVER['PHP_SELF']);
@@ -52,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
     <title>Trips</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <script>
         // Automatically refresh the page every 10 seconds
@@ -99,53 +113,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accept_trip'])) {
     <main>
         <div class="container mt-4">
             <h1>Available Trips</h1>
+
+            <?php if (isset($_SESSION['alertMessage'])): ?>
+                <script>
+                    alert("<?php echo $_SESSION['alertMessage']; ?>");
+                </script>
+                <?php unset($_SESSION['alertMessage']); ?>
+            <?php endif; ?>
+
             <?php if ($result->num_rows > 0): ?>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Request ID</th>
-                                <th>Name</th>
-                                <th>Phone</th>
-                                <th>Origin</th>
-                                <th>Destination</th>
-                                <th>Timing</th>
-                                <th>Return Timing</th>
-                                <th>Passengers</th>
-                                <th>Car Type</th>
-                                <th>Trip Type</th>
-                                <th>Offer Price</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($trip = $result->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?php echo $trip['req_id'] ?? 'N/A'; ?></td>
-                                    <td><?php echo !empty($trip['name']) ? htmlspecialchars($trip['name']) : 'N/A'; ?></td>
-                                    <td><?php echo !empty($trip['phone']) ? htmlspecialchars($trip['phone']) : 'N/A'; ?></td>
-                                    <td><?php echo !empty($trip['origin']) ? htmlspecialchars($trip['origin']) : 'N/A'; ?></td>
-                                    <td><?php echo !empty($trip['dest']) ? htmlspecialchars($trip['dest']) : 'N/A'; ?></td>
-                                    <td><?php echo !empty($trip['timing']) ? date('Y-m-d H:i:s', strtotime($trip['timing'])) : 'N/A'; ?></td>
-                                    <td><?php echo !empty($trip['returntiming']) ? date('Y-m-d H:i:s', strtotime($trip['returntiming'])) : 'N/A'; ?></td>
-                                    <td><?php echo !empty($trip['passengers']) ? htmlspecialchars($trip['passengers']) : 'N/A'; ?></td>
-                                    <td><?php echo !empty($trip['cartype']) ? htmlspecialchars($trip['cartype']) : 'N/A'; ?></td>
-                                    <td><?php echo !empty($trip['triptype']) ? htmlspecialchars($trip['triptype']) : 'N/A'; ?></td>
-                                    <td><?php echo !empty($trip['offer_price']) ? htmlspecialchars($trip['offer_price']) : 'N/A'; ?></td>
-                                    <td><?php echo $trip['status'] == 1 ? 'Accepted' : 'Available'; ?></td>
-                                    <td>
-                                        <form method="POST" action="">
-                                            <input type="hidden" name="trip_id" value="<?php echo $trip['req_id']; ?>">
-                                            <input type="number" name="counter_price" placeholder="Enter Counter Price" required min="0" step="0.01">
-                                            <button type="submit" name="submit_offer" class="btn btn-primary">Submit Offer</button>
-                                            <button type="submit" name="accept_trip" class="btn btn-success">Accept at Offer Price</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <?php while ($trip = $result->fetch_assoc()): ?>
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Request ID: <?php echo $trip['req_id'] ?? 'N/A'; ?></h5>
+                                    <p class="card-text"><strong>Name:</strong> <?php echo !empty($trip['name']) ? htmlspecialchars($trip['name']) : 'N/A'; ?></p>
+                                    <p class="card-text"><strong>Phone:</strong> <?php echo !empty($trip['phone']) ? htmlspecialchars($trip['phone']) : 'N/A'; ?></p>
+                                    <p class="card-text"><strong>Origin:</strong> <?php echo !empty($trip['origin']) ? htmlspecialchars($trip['origin']) : 'N/A'; ?></p>
+                                    <p class="card-text"><strong>Destination:</strong> <?php echo !empty($trip['dest']) ? htmlspecialchars($trip['dest']) : 'N/A'; ?></p>
+                                    <p class="card-text"><strong>Timing:</strong> <?php echo !empty($trip['timing']) ? date('Y-m-d H:i:s', strtotime($trip['timing'])) : 'N/A'; ?></p>
+
+                                    <?php if ($trip['triptype'] !== 'ONEWAY' && $trip['triptype'] !== 'CP'): ?>
+                                        <p class="card-text"><strong>Return Timing:</strong> <?php echo !empty($trip['returntiming']) ? date('Y-m-d H:i:s', strtotime($trip['returntiming'])) : 'N/A'; ?></p>
+                                    <?php endif; ?>
+                                    <p class="card-text"><strong>Car Type:</strong> <?php echo !empty($trip['cartype']) ? htmlspecialchars($trip['cartype']) : 'N/A'; ?></p>
+
+                                    <p class="card-text"><strong>Passengers:</strong> <?php echo !empty($trip['passengers']) ? htmlspecialchars($trip['passengers']) : 'N/A'; ?></p>
+                                    <p class="card-text"><strong>Trip Type:</strong> <?php echo !empty($trip['triptype']) ? htmlspecialchars($trip['triptype']) : 'N/A'; ?></p>
+                                    <p class="card-text"><strong>Offer Price:</strong> <?php echo !empty($trip['offer_price']) ? htmlspecialchars($trip['offer_price']) : 'N/A'; ?></p>
+                                    <p class="card-text"><strong>Status:</strong> <?php echo $trip['status'] == 1 ? 'Accepted' : 'Available'; ?></p>
+
+                                    <form method="POST" action="" class="mb-2">
+                                        <input type="hidden" name="trip_id" value="<?php echo $trip['req_id']; ?>">
+                                        <input type="number" name="counter_price" placeholder="Enter Counter Price" required min="0" step="0.01" class="form-control mb-2">
+                                        <button type="submit" name="submit_offer" class="btn btn-primary">Submit Offer</button>
+                                    </form>
+
+                                    <form method="POST" action="">
+                                        <input type="hidden" name="trip_id" value="<?php echo $trip['req_id']; ?>">
+                                        <button type="submit" name="accept_trip" class="btn btn-success">Accept at Offer Price</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
                 </div>
             <?php else: ?>
                 <p>No available trips at the moment.</p>
