@@ -1,30 +1,4 @@
-.nav-item{
-    font-size: 3vh;
-}
 
-.nav-link {
-    position: relative;
-    text-decoration: none;
-}
-
-.nav-link::before {
-    content: "";
-    position: absolute;
-    display: block;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: black;
-    transition: width 0.3s ease-in-out;
-}
-
-.nav-link:hover::before {
-    width: 100%;
-}
-.navbar-brand{
-    font-size: 5vh;
-}
 .select-container {
     display: flex; /* Use flexbox to align items */
     align-items: center; /* Vertically align items in the center */
@@ -95,7 +69,7 @@ input, select {
     border-radius: 5px;
 }
 
-button {
+.rcb {
     background-color: green;
     color: white;
     border: none;
@@ -105,7 +79,7 @@ button {
     width: 100%;
 }
 
-button:hover {
+.rcb:hover {
     background-color: rgb(6, 139, 6);
 }
 
